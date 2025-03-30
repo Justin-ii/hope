@@ -20,78 +20,51 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
     <script>
-      const folderLinks = [
-        {
-          folder: "edu",
+      const folderLinks = {
+        edu: {
           link: "https://s1dsa-ies.web.app",
           title: "Data Science Study Vault",
-          description: "Explore a curated collection of Data Science resources including notes, materials, and updates.",
-          image: ""
+          description: "Explore a curated collection of Data Science resources including notes, materials, and updates."
         },
-        {
-          folder: "iot",
+        iot: {
           link: "https://hope-iot.vercel.app/",
-          title: "IOT and AI summer camp ! HOPE FOR YOU",
-          description: "Access comprehensive resources for Civil and Mechanical Engineering students.",
-          image: ""
-        },
-        {
-          folder: "cs",
-          link: "https://drive.google.com/drive/folders/13dR9gMS4fP2XOTFPxkKqAK4lvxGaY-c8",
-          title: "Computer Science Study Vault",
-          description: "Find all essential materials and notes for Computer Science enthusiasts.",
-          image: ""
-        },
-        {
-          folder: "eee-ec",
-          link: "https://drive.google.com/drive/folders/13l-968zlEqr72CwYTRPCBCff2FBWtS88",
-          title: "EEE & EC Study Vault",
-          description: "Get the latest resources and updates for Electrical and Electronics Engineering.",
-          image: ""
-        },
-        {
-          folder: "r-ai",
-          link: "https://drive.google.com/drive/folders/13ewy7Euy_VQp7abKvBmovUpPcojMpGr8",
-          title: "Robotics & AI Study Vault",
-          description: "Delve into the world of Robotics and Artificial Intelligence with our study materials.",
-          image: ""
-        },
-        {
-          folder: "daily-updated-notes",
-          link: "https://drive.google.com/drive/folders/11_XAOgRHK3-1iTG2xGWjz1smYvE7sbAf",
-          title: "Daily Updated Notes",
-          description: "Stay up-to-date with the latest study notes, updated daily for all streams.",
-          image: ""
-        },
-        {
-          folder: "exam",
-          link: "https://drive.google.com/drive/folders/11i10u3U_U_Ef0Gecn_rs2ntzjAkR5kqd",
-          title: "Exam Materials Vault",
-          description: "Access focused and concise exam preparation materials for all subjects.",
-          image: ""
+          title: "IOT and AI Summer Camp! HOPE FOR YOU",
+          description: "Access comprehensive resources for Civil and Mechanical Engineering students."
         }
-      ];
-  
+      };
+    
+      const defaultRedirect = "https://hope-platform.vercel.app"; // Change this to your fallback link
+    
+      function updateMetaTag(name, content) {
+        let tag = document.querySelector(`meta[${name}]`);
+        if (!tag) {
+          tag = document.createElement("meta");
+          tag.setAttribute(name.split("=")[0], name.split("=")[1].replace(/["']/g, ""));
+          document.head.appendChild(tag);
+        }
+        tag.setAttribute("content", content);
+      }
+    
       function redirectToFolder() {
-        const url = new URL(window.location.href);
-        const folderName = url.pathname.split("/")[1];
-  
-        const folder = folderLinks.find(f => f.folder === folderName);
-  
+        const folderName = location.pathname.slice(1); // Extract folder from URL
+        const folder = folderLinks[folderName];
+    
         if (folder) {
           document.title = folder.title;
-          document.querySelector('meta[name="description"]').setAttribute("content", folder.description);
-          document.querySelector('meta[property="og:title"]').setAttribute("content", folder.title);
-          document.querySelector('meta[property="og:description"]').setAttribute("content", folder.description);
-  
-          window.location.href = folder.link;
+          updateMetaTag('name="description"', folder.description);
+          updateMetaTag('property="og:title"', folder.title);
+          updateMetaTag('property="og:description"', folder.description);
+    
+          location.href = folder.link;
         } else {
-          console.error("Folder not found!");
+          console.warn("Folder not found! Redirecting to default.");
+          location.href = defaultRedirect;
         }
       }
-  
+    
       redirectToFolder();
     </script>
+    
   </head>
 
 <body>
