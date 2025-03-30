@@ -19,50 +19,7 @@
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
-    <script>
-      const folderLinks = {
-        edu: {
-          link: "https://s1dsa-ies.web.app",
-          title: "Data Science Study Vault",
-          description: "Explore a curated collection of Data Science resources including notes, materials, and updates."
-        },
-        iot: {
-          link: "https://hope-iot.vercel.app/",
-          title: "IOT and AI Summer Camp! HOPE FOR YOU",
-          description: "Access comprehensive resources for Civil and Mechanical Engineering students."
-        }
-      };
-    
-    
-      function updateMetaTag(name, content) {
-        let tag = document.querySelector(`meta[${name}]`);
-        if (!tag) {
-          tag = document.createElement("meta");
-          tag.setAttribute(name.split("=")[0], name.split("=")[1].replace(/["']/g, ""));
-          document.head.appendChild(tag);
-        }
-        tag.setAttribute("content", content);
-      }
-    
-      function redirectToFolder() {
-        const folderName = location.pathname.slice(1); // Extract folder from URL
-        const folder = folderLinks[folderName];
-    
-        if (folder) {
-          document.title = folder.title;
-          updateMetaTag('name="description"', folder.description);
-          updateMetaTag('property="og:title"', folder.title);
-          updateMetaTag('property="og:description"', folder.description);
-    
-          location.href = folder.link;
-        } else {
-          console.warn("Folder not found! Redirecting to default.");
-          location.href = defaultRedirect;
-        }
-      }
-    
-      redirectToFolder();
-    </script>
+
     
   </head>
 
